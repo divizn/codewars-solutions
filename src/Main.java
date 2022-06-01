@@ -3,6 +3,8 @@ public class Main {
     public static void main(String[] args) {
         int[] input = {4,5,6,8,5,3,5,6,-25,-25,-25,-25,-100};
         int[] n = {1, 2, 2};
+        int[] classPoints = {10, 6, 8, 7, 5, 10};
+        int yourPoints = 9;
         String inp = "1010000";
         String p1 = "rock";
         String p2 = "paper";
@@ -10,6 +12,7 @@ public class Main {
         System.out.println("\nBinary to decimal of "+inp+": " + binToDecimal(inp));
         System.out.println("\nSum of the squares of array "+Arrays.toString(n)+": "+squareSum(n));
         System.out.println("\nPlayer 1 chose "+p1+", and Player 2 chose "+p2+" so "+rps(p1, p2));
+        System.out.println("\nClass points: "+Arrays.toString(classPoints)+", and your points: "+yourPoints+". Your points higher than class average: "+betterThanAverage(classPoints, yourPoints));
     }
     /* (8kyu) (https://www.codewars.com/kata/576bb71bbbcf0951d5000044)
     Given an array of integers, return an array where the first element is the count of positives numbers and the second element is sum of negative numbers.
@@ -81,5 +84,28 @@ public class Main {
         }
         return "Draw!";
     }
+    /* (8kyu) (https://www.codewars.com/kata/5601409514fc93442500010b/train/java)
+    There was a test in your class, and you passed it. Congratulations!
+    But you're an ambitious person. You want to know if you're better than the average student in your class.
+    You receive an array with your peers' test scores. Now calculate the average and compare your score!
+    Return True if you're better, else False!
+    Note:
+    Your points are not included in the array of your class's points. For calculating the average point you may add your point to the given array!
+     */
+    public static boolean betterThanAverage(int[] classPoints, int yourPoints) {
+        int sum = 0;
+        for(int i = 0; i<classPoints.length; i++) {
+            sum += classPoints[i];
+        }
+        sum = sum + yourPoints;
+        sum = sum/(classPoints.length+1);
+        if(sum>yourPoints) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
 }
 
