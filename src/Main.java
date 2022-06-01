@@ -4,9 +4,12 @@ public class Main {
         int[] input = {4,5,6,8,5,3,5,6,-25,-25,-25,-25,-100};
         int[] n = {1, 2, 2};
         String inp = "1010000";
+        String p1 = "rock";
+        String p2 = "paper";
         System.out.println("Count of positive numbers and sum of negatives numbers in array "+Arrays.toString(input)+": " + Arrays.toString(countPositivesSumNegatives(input)));
         System.out.println("\nBinary to decimal of "+inp+": " + binToDecimal(inp));
         System.out.println("\nSum of the squares of array "+Arrays.toString(n)+": "+squareSum(n));
+        System.out.println("\nPlayer 1 chose "+p1+", and Player 2 chose "+p2+" so "+rps(p1, p2));
     }
     /* (8kyu) (https://www.codewars.com/kata/576bb71bbbcf0951d5000044)
     Given an array of integers, return an array where the first element is the count of positives numbers and the second element is sum of negative numbers.
@@ -59,6 +62,24 @@ public class Main {
             return result;
         }
         return 0;
+    }
+    /* (8kyu) (https://www.codewars.com/kata/5672a98bdbdd995fad00000f/train/java)
+    Rock Paper Scissors
+    Let's play! You have to return which player won! In case of a draw return Draw!.
+    Examples:
+    rps('scissors','paper') // Player 1 won!
+    rps('scissors','rock') // Player 2 won!
+    rps('paper','paper') // Draw!*/
+    public static String rps(String p1, String p2) {
+        if (!p1.equals(p2)){
+            if((p1.equals("scissors") && p2.equals("paper")) || (p1.equals("rock") && p2.equals("scissors")) || (p1.equals("paper") && p2.equals("rock"))){
+                return "Player 1 won!";
+            }
+            else{
+                return "Player 2 won!";
+            }
+        }
+        return "Draw!";
     }
 }
 
