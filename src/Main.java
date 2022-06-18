@@ -5,6 +5,7 @@ public class Main {
         int[] n = {1, 2, 2};
         int[] classPoints = {10, 6, 8, 7, 5, 10};
         int yourPoints = 9;
+        int number = 47;
         String inp = "1010000";
         String p1 = "rock";
         String p2 = "paper";
@@ -13,6 +14,7 @@ public class Main {
         System.out.println("\nSum of the squares of array "+Arrays.toString(n)+": "+squareSum(n));
         System.out.println("\nPlayer 1 chose "+p1+", and Player 2 chose "+p2+" so "+rps(p1, p2));
         System.out.println("\nClass points: "+Arrays.toString(classPoints)+", and your points: "+yourPoints+". Your points higher than class average: "+betterThanAverage(classPoints, yourPoints));
+        System.out.println("\nSum of all natural numbers divided by 3 and 5 below the number: "+number+" is "+isPrime(number));
     }
     /* (8kyu) (https://www.codewars.com/kata/576bb71bbbcf0951d5000044)
     Given an array of integers, return an array where the first element is the count of positives numbers and the second element is sum of negative numbers.
@@ -106,6 +108,29 @@ public class Main {
             return true;
         }
     }
+    /* (6kyu) (https://www.codewars.com/kata/514b92a657cdc65150000006/train/java)
+    If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+    Finish the solution so that it returns the sum of all the multiples of 3 or 5 below the number passed in. Additionally, if the number is negative, return 0 (for languages that do have them).
+    Note: If the number is a multiple of both 3 and 5, only count it once.
+    */
+    public int solution(int number) {
+    int sum = 0;
+    if (number>0){
+      for(int i = 1; i<number; i++){
+          if(i % 3 == 0 && i % 5 == 0){
+            sum += i;
+          }
+          if(i % 3 == 0){
+            sum += i;
+          }
+          if(i % 5 == 0){
+            sum += i;
+          }
+        }
+      return sum;
+      }
+    return 0;
+  }
 
 }
 
