@@ -21,6 +21,10 @@ public class Main {
         System.out.println("\nSum of all natural numbers multiples of 3 and 5 below the number " + number + " is: "
                 + sumOfNaturalNumbers(number));
         System.out.println("\nCount of vowels in sentence " + sentence + ": " + countVowels(sentence));
+        System.out.println("\nAmount of 1s in int 2 is " + countBits(2));
+        System.out.println("\nIntsteam " + anaiian(2, 2));
+        System.out.println("\ntostring " + maskify("jfajfiajfiajf"));
+        System.out.println("\nreversed The quick brown fox jumps over the lazy dog: " + spinWords(sentence));
     }
 
     /*
@@ -122,22 +126,18 @@ public class Main {
      */
     public static boolean betterThanAverage(int[] classPoints, int yourPoints) {
         int sum = 0;
-        for (int i = 0; i < classPoints.length; i++) {
-            sum += classPoints[i];
+        for (int classPoint : classPoints) {
+            sum += classPoint;
         }
         sum = sum + yourPoints;
         sum = sum / (classPoints.length + 1);
-        if (sum > yourPoints) {
-            return false;
-        } else {
-            return true;
-        }
+        return sum <= yourPoints;
     }
 
     /*
      * (7kyu) (https://www.codewars.com/kata/54ff3102c1bad923760001f3/train/java)
      * Return the number (count) of vowels in the given string.
-     * We will consider a, e, i, o, u as vowels for this Kata (but not y).
+     * We will consider A, E, I, O, U as vowels for this Kata (but not y).
      * The input string will only consist of lower case letters and/or spaces.
      */
     public static int countVowels(String str) {
@@ -149,6 +149,116 @@ public class Main {
             }
         }
         return count;
+    }
+
+    /*
+     * (7kyu) (https://www.codewars.com/kata/5412509bd436bd33920011bc/train/java)
+     * Usually when you buy something, you're asked whether your credit card number,
+     * phone number or answer to your most secret question is still correct.
+     * However, since someone could look over your shoulder, you don't want that
+     * shown on your screen. Instead, we mask it.
+     * Your task is to write a function maskify, which changes all but the last four
+     * characters into '#'.
+     * Examples:
+     * "4556364607935616" --> "############5616"
+     * "64607935616" --> "#######5616"
+     * "1" --> "1"
+     * "" --> ""
+     * // "What was the name of your first pet?"
+     * "Skippy" --> "##ippy"
+     * "Nananananananananananananananana Batman!"
+     * -->
+     * "####################################man!"
+     */
+    public static String maskify(String str) {
+        if (str.length() <= 4)
+            return str;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < str.length() - 4; i++) {
+            sb.append("#");
+        }
+        sb.append(str.substring(str.length() - 4));
+        return sb.toString();
+    }
+
+    /*
+     * (7kyu) (https://www.codewars.com/kata/562f91ff6a8b77dfe900006e/train/java)
+     * My friend John likes to go to the cinema. He can choose between system A and
+     * system B:
+     * System A - he buys a ticket (15 dollars) every time
+     * System B - he buys a card (500 dollars) and a first ticket for 0.90 times the
+     * ticket price and then for each additional ticket he pays 0.90 times the price
+     * paid for the previous ticket.
+     * John wants to know how many times he must go to the cinema so that the final
+     * result of System B, when rounded up to the next dollar, will be cheaper than
+     * System A.
+     * The function movie has 3 parameters: card (price of the card), ticket (normal
+     * price of a ticket), perc (fraction of what he paid for the previous ticket)
+     * and returns the first n such that
+     * ceil(price of System B) < price of System A.
+     */
+    public static int movie(int card, int ticket, double perc) {
+        double priceOfA = 0;
+        double priceOfB = card;
+        int i = 0;
+        while (Math.ceil(priceOfB) >= priceOfA) {
+            i++;
+            priceOfA += ticket;
+            priceOfB += ticket * Math.pow(perc, i);
+        }
+        return i;
+    }
+
+    /*
+     * (7kyu) (https://www.codewars.com/kata/55f2b110f61eb01779000053/train/java)
+     * Given two integers a and b, which can be positive or negative, find the sum
+     * of all the integers between and including them and return it. If the two
+     * numbers are equal return a or b.
+     * Note: a and b are not ordered!
+     * Examples (a, b) --> output (explanation)
+     * (1, 0) --> 1 (1 + 0 = 1)
+     * (1, 2) --> 3 (1 + 2 = 3)
+     * (0, 1) --> 1 (0 + 1 = 1)
+     * (1, 1) --> 1 (1 since both are same)
+     * (-1, 0) --> -1 (-1 + 0 = -1)
+     * (-1, 2) --> 2 (-1 + 0 + 1 + 2 = 2)
+     */
+    public static int anaiian(int a, int b) {
+        int sum = 0;
+        if (a > b) {
+            for (int i = b; i <= a; i++) {
+                sum += i;
+            }
+        } else {
+            for (int i = a; i <= b; i++) {
+                sum += i;
+            }
+        }
+        return sum;
+    }
+
+    /*
+     * (7kyu) (https://www.codewars.com/kata/5259b20d6021e9e14c0010d4/train/java)
+     * Complete the function that accepts a string parameter, and reverses each word
+     * in the string. All spaces in the string should be retained.
+     * Examples:
+     * "This is an example!" ==> "sihT si na !elpmaxe"
+     * "double  spaces" ==> "elbuod  secaps"
+     */
+    public static String reverseWords(String str) {
+        if (str.trim() == "")
+            return str;
+        String[] words = str.split(" ");
+        String result = "";
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            String reverse = "";
+            for (int j = word.length() - 1; j >= 0; j--) {
+                reverse += word.charAt(j);
+            }
+            result += reverse + " ";
+        }
+        return result.trim();
     }
 
     /*
@@ -175,5 +285,92 @@ public class Main {
             return sum;
         }
         return 0;
+    }
+
+    /*
+     * (6kyu) (https://www.codewars.com/kata/526571aae218b8ee490006f4/train/java)
+     * Write a function that takes an integer as input, and returns the number of
+     * bits that are equal to one in the binary representation of that number. You
+     * can guarantee that input is non-negative.
+     * Example: The binary representation of 1234 is 10011010010, so the function
+     * should return 5 in this case
+     */
+    public static int countBits(int n) {
+        String binVal = Integer.toBinaryString(n);
+        int count = (int) binVal.chars().filter(ch -> ch == '1').count();
+        return count;
+    }
+
+    /*
+     * (6kyu) (https://www.codewars.com/kata/5264d2b162488dc400000001/train/java)
+     * Write a function that takes in a string of one or more words, and returns the
+     * same string, but with all five or more letter words reversed (Just like the
+     * name of this Kata). Strings passed in will consist of only letters and
+     * spaces. Spaces will be included only when more than one word is present.
+     * Examples:
+     * spinWords( "Hey fellow warriors" ) => returns "Hey wollef sroirraw"
+     * spinWords( "This is a test") => returns "This is a test" spinWords(
+     * "This is another test" )=> returns "This is rehtona test"
+     */
+    public static String spinWords(String sentence) {
+        String words[] = sentence.split(" ");
+        String newSentence = "";
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].length() >= 5) {
+                String str = words[i];
+                StringBuilder sb = new StringBuilder(str);
+                newSentence += sb.reverse() + " ";
+            } else {
+                newSentence += words[i] + " ";
+            }
+        }
+        return newSentence.trim();
+    }
+
+    /*
+     * (6kyu) (https://www.codewars.com/kata/54da539698b8a2ad76000228/train/java)
+     * You live in the city of Cartesia where all roads are laid out in a perfect
+     * grid. You arrived ten minutes too early to an appointment, so you decided to
+     * take the opportunity to go for a short walk. The city provides its citizens
+     * with a Walk Generating App on their phones -- everytime you press the button
+     * it sends you an array of one-letter strings representing directions to walk
+     * (eg. ['n', 's', 'w', 'e']). You always walk only a single block for each
+     * letter (direction) and you know it takes you one minute to traverse one city
+     * block, so create a function that will return true if the walk the app gives
+     * you will take you exactly ten minutes (you don't want to be early or late!)
+     * and will, of course, return you to your starting point. Return false
+     * otherwise.
+     * Note: you will always receive a valid array containing a random assortment of
+     * direction letters ('n', 's', 'e', or 'w' only). It will never give you an
+     * empty array (that's not a walk, that's standing still!).
+     */
+    public static boolean isValid(char[] walk) {
+        if (walk.length != 10) {
+            return false;
+        }
+
+        int x = 0;
+        int y = 0;
+
+        for (Character c : walk) {
+            switch (c) {
+                case 'n':
+                    y++;
+                    break;
+                case 's':
+                    y--;
+                    break;
+                case 'e':
+                    x--;
+                    break;
+                case 'w':
+                    x++;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return x == 0 && y == 0;
     }
 }
